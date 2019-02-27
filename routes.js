@@ -6,7 +6,6 @@ const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 const movieRoute = async (req, res) => {
   const { id } = req.params;
 
-  console.log("config ", config);
   const apiData = await axios.get(
     `${config.moviedbUrl}/movie/${id}?${apiKeyParameter}`
   );
