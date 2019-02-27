@@ -5,8 +5,9 @@ const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 
 const popularMoviesRoute = async (req, res) => {
   try {
+    const { page = 1 } = req.query;
     const apiData = await axios.get(
-      `${config.moviedbUrl}/movie/popular?${apiKeyParameter}`
+      `${config.moviedbUrl}/movie/popular?${apiKeyParameter}&page=${page}`
     );
 
     res.send(apiData.data);
