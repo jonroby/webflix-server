@@ -1,13 +1,17 @@
 const express = require("express");
-const { jsonBodyParser, headers } = "./app-config";
+const config = require("./config");
+const { jsonBodyParser, headers } = require("./express-config");
+const { movieRoute, searchMoviesRoute } = require("./routes");
 
-const PORT = process.env.PORT || 4000;
-
+// Setup
 const app = express();
-
 app.use(jsonBodyParser);
 app.use(headers);
 
-app.get("/", (req, res) => res.send("Hello"));
+// Routes
+app.get("/movies/:id", movieRoute);
+app.get("/search/movies", searchMoviesRoute);
 
-app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
+app.listen(config.PORT, () =>
+  console.log(`App listening on port ${config.PORT}!`)
+);

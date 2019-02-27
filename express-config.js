@@ -11,4 +11,4 @@ const headers = (req, res, next) => {
   next();
 };
 
-export { jsonBodyParser, headers };
+module.exports = { jsonBodyParser, headers };
