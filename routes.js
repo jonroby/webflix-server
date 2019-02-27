@@ -3,6 +3,18 @@ const config = require("./config");
 
 const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 
+const popularMoviesRoute = async (req, res) => {
+  try {
+    const apiData = await axios.get(
+      `${config.moviedbUrl}/movie/popular?${apiKeyParameter}`
+    );
+
+    res.send(apiData.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const movieRoute = async (req, res) => {
   const { id } = req.params;
 
@@ -26,4 +38,4 @@ const searchMoviesRoute = async (req, res) => {
   res.send(apiData.data);
 };
 
-module.exports = { movieRoute, searchMoviesRoute };
+module.exports = { popularMoviesRoute, movieRoute, searchMoviesRoute };
