@@ -4,7 +4,8 @@ const config = require("./config");
 const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 
 const relatedMoviesRoute = async (req, res) => {
-  const { id, page = 1 } = req.params;
+  const { id } = req.params;
+  const { page = 1 } = req.query;
   const apiData = await axios.get(
     `${config.moviedbUrl}/movie/${id}/similar?${apiKeyParameter}&page=${page}`
   );

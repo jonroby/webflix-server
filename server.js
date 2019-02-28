@@ -14,7 +14,6 @@ app.use(jsonBodyParser);
 app.use(headers);
 
 // Routes
-
 app.get("/movies/popular", popularMoviesRoute);
 app.get("/movies/related/:id", relatedMoviesRoute);
 app.get("/movies/:id", movieRoute);
