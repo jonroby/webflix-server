@@ -3,6 +3,35 @@ const config = require("./config");
 
 const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 
+const moviesRoute = async (req, res) => {
+  try {
+    const { page = 1 } = req.query;
+
+    const category = req.url.split("/")[2].replace("-", "_"); // Do better
+
+    const apiData = await axios.get(
+      `${config.moviedbUrl}/movie/${category}?${apiKeyParameter}&page=${page}`
+    );
+
+    res.send(apiData.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const trendingRoute = async (req, res) => {
+  try {
+    const { page = 1 } = req.query;
+    const apiData = await axios.get(
+      `${config.moviedbUrl}/trending/movie/day?${apiKeyParameter}&page=${page}`
+    );
+
+    res.send(apiData.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const relatedMoviesRoute = async (req, res) => {
   const { id } = req.params;
   const { page = 1 } = req.query;
@@ -12,19 +41,6 @@ const relatedMoviesRoute = async (req, res) => {
 
   // TODO: Error handling
   res.send(apiData.data);
-};
-
-const popularMoviesRoute = async (req, res) => {
-  try {
-    const { page = 1 } = req.query;
-    const apiData = await axios.get(
-      `${config.moviedbUrl}/movie/popular?${apiKeyParameter}&page=${page}`
-    );
-
-    res.send(apiData.data);
-  } catch (err) {
-    console.log(err);
-  }
 };
 
 const movieRoute = async (req, res) => {
@@ -51,7 +67,8 @@ const searchMoviesRoute = async (req, res) => {
 };
 
 module.exports = {
-  popularMoviesRoute,
+  moviesRoute,
+  trendingRoute,
   movieRoute,
   searchMoviesRoute,
   relatedMoviesRoute
