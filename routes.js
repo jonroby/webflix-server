@@ -139,15 +139,12 @@ const personRoute = async (req, res) => {
 
 const genresRoute = async (req, res) => {
   const { id } = req.params;
-
-  const personData = axios.get(
-    `${config.moviedbUrl}/person/${id}?${apiKeyParameter}`
-  );
+  const { page = 1 } = req.query;
 
   const data = await axios.get(
     `${
       config.moviedbUrl
-    }/discover/movie?with_genres=${id}&sort_by=popularity.desc&${apiKeyParameter}`
+    }/discover/movie?with_genres=${id}&sort_by=popularity.desc&page=${page}&${apiKeyParameter}`
   );
 
   // TODO: Error handling
