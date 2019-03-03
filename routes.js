@@ -5,7 +5,8 @@ const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 const moviesRoute = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    const { category } = req.params;
+    let { category } = req.params;
+    category = category.replace("-", "_");
 
     const apiData = await axios.get(
       `${config.moviedbUrl}/movie/${category}?${apiKeyParameter}&page=${page}`
