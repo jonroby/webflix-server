@@ -7,7 +7,10 @@ const {
   relatedMoviesRoute,
   trendingRoute,
   movieRoute,
-  searchMoviesRoute
+  searchMoviesRoute,
+  personsRoute,
+  personRoute,
+  genresRoute
 } = require("./routes");
 
 // Setup
@@ -15,21 +18,22 @@ const app = express();
 app.use(jsonBodyParser);
 app.use(headers);
 
-// Routes
-// /categories/popular"
-// /categories/latest"
-// /categories/now-playing"
-// /categories/top-rated"
-// /categories/upcoming"
-// /categories/trending"
-
+// popular, latest, now-playing, top-rated, upcoming, trending
 app.get("/movies/categories/trending", trendingRoute);
 app.get("/movies/categories/:category", moviesRoute);
-
 app.get("/movies/related/:id", relatedMoviesRoute);
-
 app.get("/movies/:id", movieRoute);
+
 app.get("/search/movies", searchMoviesRoute);
+
+// trending, popular
+app.get("/persons/categories/trending", trendingRoute);
+app.get("/persons/categories/:category", personsRoute);
+app.get("/persons/:id", personRoute);
+
+app.get("/genres/:id", genresRoute);
+// Genre
+// /discover/movie
 
 app.listen(config.PORT, () =>
   console.log(`App listening on port ${config.PORT}!`)
