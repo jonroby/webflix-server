@@ -1,5 +1,7 @@
 const axios = require("axios");
 const config = require("./config");
+const { redisGet, redisSet } = require("./redis");
+
 const apiKeyParameter = `api_key=${config.moviedbApiKey}`;
 
 const moviesRoute = async (req, res) => {
@@ -8,9 +10,20 @@ const moviesRoute = async (req, res) => {
     let { category } = req.params;
     category = category.replace("-", "_");
 
+    if (page >= 1 || page < 3) {
+      const cached = await redisGet(`/movies/${category}&page=${page}`);
+      if (cached) {
+        console.log("cached ", cached);
+        res.send(cached);
+        return;
+      }
+    }
+
     const apiData = await axios.get(
       `${config.moviedbUrl}/movie/${category}?${apiKeyParameter}&page=${page}`
     );
+
+    redisSet(`/movies/${category}&page=${page}`, JSON.stringify(apiData.data));
 
     res.send(apiData.data);
   } catch (err) {
