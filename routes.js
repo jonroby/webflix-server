@@ -112,7 +112,7 @@ const personsRoute = async (req, res) => {
       `${config.moviedbUrl}/person/${category}?${apiKeyParameter}&page=${page}`
     );
 
-    redisSet(`/movies/${category}&page=${page}`, JSON.stringify(apiData.data));
+    redisSet(`/persons/${category}&page=${page}`, JSON.stringify(apiData.data));
 
     res.send(apiData.data);
   } catch (err) {
